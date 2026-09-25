@@ -1,26 +1,31 @@
 import Link from "next/link"
 
-export function SiteFooter() {
+import { t } from "@/lib/copy"
+import type { Lang } from "@/lib/language"
+
+export function SiteFooter({ lang }: { lang: Lang }) {
+  const text = t(lang)
   return (
     <footer className="mt-auto border-t border-border/80 bg-card">
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr]">
         <div>
           <p className="font-heading text-lg">Kisan Patra</p>
           <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-            An independent register of central schemes and subsidies for Indian
-            farmers. Not a Government of India website. Check the official
-            portal before you apply, pay a fee, or share documents.
+            {text.footerBlurb}
           </p>
         </div>
         <div className="flex flex-col gap-2 text-sm">
           <Link href="/schemes" className="hover:underline">
-            Browse the register
+            {text.footerBrowse}
           </Link>
           <Link href="/finder" className="hover:underline">
-            See what may fit
+            {text.footerFit}
+          </Link>
+          <Link href="/schemes?place=haryana" className="hover:underline">
+            {text.haryanaLink}
           </Link>
           <Link href="/about" className="hover:underline">
-            Sources and how to read a scheme
+            {text.footerSources}
           </Link>
           <a
             href="https://www.myscheme.gov.in/"
@@ -28,7 +33,7 @@ export function SiteFooter() {
             target="_blank"
             rel="noreferrer"
           >
-            State schemes on myScheme
+            {text.footerState}
           </a>
         </div>
       </div>

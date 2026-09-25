@@ -7,17 +7,11 @@ import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { categoryLabel } from "@/data/categories"
 import { schemes } from "@/data/schemes"
+import { t } from "@/lib/copy"
+import { getLang } from "@/lib/language"
+import { localizeScheme } from "@/lib/localize"
 import { getScheme, relatedSchemes } from "@/lib/schemes"
 import { cn } from "cn"
-
-const listCopy = {
-  "ministry-2026":
-    "Named in the Ministry of Agriculture & Farmers Welfare list tabled in the Lok Sabha on 3 February 2026.",
-  allied:
-    "Run by another department. Farmers use it, but it was not in that agriculture-ministry annexure.",
-  platform:
-    "The trading platform inside the Integrated Scheme for Agricultural Marketing. Listed on its own because farmers search for it by name.",
-} as const
 
 export function generateStaticParams() {
   return schemes.map((scheme) => ({ slug: scheme.slug }))
@@ -29,11 +23,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
+  const lang = await getLang()
   const scheme = getScheme(slug)
-  if (!scheme) return { title: "Scheme not found" }
+  if (!scheme) return { title: t(lang).missingTitle }
+  const view = localizeScheme(scheme, lang)
   return {
-    title: scheme.shortName,
-    description: scheme.summary,
+    title: lang === "hi" ? scheme.localName : scheme.shortName,
+    description: view.summary,
   }
 }
 
@@ -42,32 +38,40 @@ export default async function SchemePage({
 }: {
   params: Promise<{ slug: string }>
 }) {
+  const lang = await getLang()
+  const text = t(lang)
   const { slug } = await params
-  const scheme = getScheme(slug)
-  if (!scheme) notFound()
-  const related = relatedSchemes(scheme)
+  const source = getScheme(slug)
+  if (!source) notFound()
+  const scheme = localizeScheme(source, lang)
+  const related = relatedSchemes(source)
+  const registerHref = source.jurisdiction === "state" ? "/schemes?place=haryana" : "/schemes"
 
   return (
     <article className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
       <p className="text-sm text-muted-foreground">
-        <Link href="/schemes" className="hover:underline">
-          Register
+        <Link href={registerHref} className="hover:underline">
+          {text.crumbRegister}
         </Link>
         <span aria-hidden> / </span>
-        {categoryLabel(scheme.category)}
+        {categoryLabel(scheme.category, lang)}
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        <Badge>{categoryLabel(scheme.category)}</Badge>
+        <Badge>{categoryLabel(scheme.category, lang)}</Badge>
         <Badge variant="outline">{scheme.highlight}</Badge>
       </div>
       <h1 className="mt-4 font-heading text-4xl leading-tight sm:text-5xl">
-        {scheme.shortName}
+        {lang === "hi" ? source.localName : source.shortName}
       </h1>
-      <p className="mt-2 text-lg text-foreground/80">{scheme.name}</p>
-      <p className="mt-1 text-sm text-muted-foreground">{scheme.localName}</p>
+      <p className="mt-2 text-lg text-foreground/80">
+        {lang === "hi" ? source.shortName : source.name}
+      </p>
+      {lang === "en" ? (
+        <p className="mt-1 text-sm text-muted-foreground">{source.localName}</p>
+      ) : null}
       <p className="mt-6 text-base leading-7">{scheme.summary}</p>
       <p className="mt-4 text-sm leading-6 text-muted-foreground">
-        {scheme.ministry}. {listCopy[scheme.list]}
+        {scheme.ministry}. {text.listNote[scheme.list]}
       </p>
 
       <a
@@ -76,14 +80,14 @@ export default async function SchemePage({
         rel="noreferrer"
         className={cn(buttonVariants({ size: "lg" }), "mt-6 h-11 px-4")}
       >
-        Open {scheme.officialLabel}
+        {text.openOfficial(scheme.officialLabel)}
       </a>
 
-      <Section title="What you get" items={scheme.whatYouGet} />
-      <Section title="Who can apply" items={scheme.whoCanApply} />
-      <Section title="Papers to keep ready" items={scheme.documents} />
+      <Section title={text.whatYouGet} items={scheme.whatYouGet} />
+      <Section title={text.whoCanApply} items={scheme.whoCanApply} />
+      <Section title={text.papers} items={scheme.documents} />
       <div className="mt-8">
-        <h2 className="font-heading text-2xl">How to apply</h2>
+        <h2 className="font-heading text-2xl">{text.howToApply}</h2>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6">
           {scheme.howToApply.map((step) => (
             <li key={step}>{step}</li>
@@ -91,25 +95,22 @@ export default async function SchemePage({
         </ol>
       </div>
       <div className="mt-8 rounded-2xl bg-accent px-4 py-4 text-accent-foreground">
-        <h2 className="font-heading text-xl">Before you pay anyone</h2>
+        <h2 className="font-heading text-xl">{text.beforePay}</h2>
         <ul className="mt-2 list-disc space-y-2 pl-5 text-sm leading-6">
           {scheme.watchouts.map((item) => (
             <li key={item}>{item}</li>
           ))}
-          <li>
-            Rates, crops, and state participation change. The official page is
-            the one that counts.
-          </li>
+          <li>{text.rateNote}</li>
         </ul>
       </div>
 
       {related.length > 0 ? (
         <div className="mt-12">
-          <h2 className="font-heading text-2xl">Nearby in the register</h2>
+          <h2 className="font-heading text-2xl">{text.nearby}</h2>
           <ul className="mt-4 grid gap-4">
             {related.map((item) => (
               <li key={item.slug}>
-                <SchemeCard scheme={item} />
+                <SchemeCard scheme={item} lang={lang} />
               </li>
             ))}
           </ul>

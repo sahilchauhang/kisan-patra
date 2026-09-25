@@ -34,7 +34,9 @@ export const activityIds = [
 
 export type ActivityId = (typeof activityIds)[number]
 
-export type SchemeList = "ministry-2026" | "allied" | "platform"
+export type SchemeList = "ministry-2026" | "allied" | "platform" | "state"
+
+export type Jurisdiction = "central" | "state"
 
 export type ApplyAs = "person" | "group" | "startup" | "through-state"
 
@@ -57,6 +59,7 @@ export type Scheme = {
   officialUrl: string
   officialLabel: string
   list: SchemeList
+  jurisdiction?: Jurisdiction
   featured?: boolean
   keywords: string[]
   activities: ActivityId[]
