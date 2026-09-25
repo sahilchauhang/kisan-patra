@@ -1,20 +1,18 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-
 import type { Lang } from "@/lib/language"
-
-const languageCookie = "lang"
 import { cn } from "cn"
 
-export function LanguageToggle({ lang }: { lang: Lang }) {
-  const router = useRouter()
+const languageCookie = "lang"
 
+export function LanguageToggle({ lang }: { lang: Lang }) {
   function choose(next: Lang) {
     if (next === lang) return
     document.cookie = `${languageCookie}=${next}; Path=/; Max-Age=31536000; SameSite=Lax`
-    document.documentElement.lang = next === "hi" ? "hi" : "en"
-    router.refresh()
+    const url = new URL(window.location.href)
+    if (next === "hi") url.searchParams.set("lang", "hi")
+    else url.searchParams.delete("lang")
+    window.location.assign(url.pathname + url.search + url.hash)
   }
 
   return (

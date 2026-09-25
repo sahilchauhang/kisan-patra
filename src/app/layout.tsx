@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Fraunces, Noto_Sans_Devanagari, Source_Sans_3 } from "next/font/google"
 
+import { LocaleLinks } from "@/components/locale-links"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { getLang } from "@/lib/language"
@@ -40,6 +41,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${sourceSans.variable} ${fraunces.variable} ${devanagari.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        <LocaleLinks lang={lang} />
         <SiteHeader lang={lang} />
         <main className="flex-1">{children}</main>
         <SiteFooter lang={lang} />
