@@ -2,7 +2,7 @@
 
 An independent register of central government schemes and subsidies for Indian farmers. It gathers the programmes the Ministry of Agriculture & Farmers Welfare listed for Parliament, plus allied schemes for credit, solar pumps, fisheries, livestock, and food processing. Haryana is the first state list. Other states are not loaded yet.
 
-The header has an English / हिंदी control. The choice is stored in a `lang` cookie and the pages render in that language.
+The site opens in Hindi. The header control switches to English, which stays on for that visit through `lang=en` in the address.
 
 This is not a Government of India website. Confirm eligibility and rates on the official portal before you apply.
 

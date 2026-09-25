@@ -10,7 +10,7 @@ export function LanguageToggle({ lang }: { lang: Lang }) {
     if (next === lang) return
     document.cookie = `${languageCookie}=${next}; Path=/; Max-Age=31536000; SameSite=Lax`
     const url = new URL(window.location.href)
-    if (next === "hi") url.searchParams.set("lang", "hi")
+    if (next === "en") url.searchParams.set("lang", "en")
     else url.searchParams.delete("lang")
     window.location.assign(url.pathname + url.search + url.hash)
   }

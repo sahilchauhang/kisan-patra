@@ -23,7 +23,7 @@ export function LocaleLinks({ lang }: { lang: Lang }) {
       if (!raw || raw.startsWith("#") || raw.startsWith("mailto:") || raw.startsWith("tel:")) return
       const url = new URL(raw, window.location.origin)
       if (url.origin !== window.location.origin) return
-      if (lang === "hi") url.searchParams.set("lang", "hi")
+      if (lang === "en") url.searchParams.set("lang", "en")
       else url.searchParams.delete("lang")
       const next = url.pathname + url.search + url.hash
       if (next === raw) return

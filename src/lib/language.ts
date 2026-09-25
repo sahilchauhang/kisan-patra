@@ -8,5 +8,5 @@ export async function getLang(): Promise<Lang> {
   const marked = (await headers()).get("x-lang")
   if (marked === "hi" || marked === "en") return marked
   const jar = await cookies()
-  return jar.get(languageCookie)?.value === "hi" ? "hi" : "en"
+  return jar.get(languageCookie)?.value === "en" ? "en" : "hi"
 }
