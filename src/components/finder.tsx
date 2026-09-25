@@ -44,6 +44,11 @@ const ageOptions: { id: AgeAnswer; label: string }[] = [
   { id: "60-plus", label: "60 or older" },
 ]
 
+const stateItems: Record<string, string> = { unsure: "Not sure" }
+for (const item of states) {
+  stateItems[item.id] = item.name
+}
+
 function ChoiceGroup<T extends string>({
   label,
   value,
@@ -160,6 +165,7 @@ export function Finder() {
         <div className="space-y-2">
           <Label htmlFor="state">State or Union Territory</Label>
           <Select
+            items={stateItems}
             value={state}
             onValueChange={(value) => setState(value ?? "unsure")}
           >

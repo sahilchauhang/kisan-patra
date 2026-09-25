@@ -11,7 +11,12 @@ npm install
 npm run dev
 ```
 
-The dev server listens on port 3847.
+The dev server listens on port 3847. A production build uses the same port:
+
+```bash
+npm run build
+npm start
+```
 
 ## What is included
 
