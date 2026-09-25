@@ -2,7 +2,9 @@
 
 import { useRouter } from "next/navigation"
 
-import { languageCookie, type Lang } from "@/lib/language"
+import type { Lang } from "@/lib/language"
+
+const languageCookie = "lang"
 import { cn } from "cn"
 
 export function LanguageToggle({ lang }: { lang: Lang }) {
