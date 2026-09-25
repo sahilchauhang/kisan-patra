@@ -11,23 +11,25 @@ export function PlaceSwitch({
   category = "all",
 }: {
   lang: Lang
-  place: "centre" | "haryana"
+  place: "all" | "centre" | "haryana"
   q?: string
   category?: string
 }) {
   const text = t(lang)
 
-  function href(next: "centre" | "haryana") {
+  function href(next: "all" | "centre" | "haryana") {
     const params = new URLSearchParams()
     if (q) params.set("q", q)
     if (category && category !== "all") params.set("category", category)
-    if (next === "haryana") params.set("place", "haryana")
+    if (next !== "all") params.set("place", next)
+    params.set("lang", lang)
     const query = params.toString()
     return query ? `/schemes?${query}` : "/schemes"
   }
 
   const options = [
-    { id: "centre" as const, label: text.placeCentre },
+    { id: "all" as const, label: lang === "hi" ? "सभी योजनाएँ" : "All schemes" },
+    { id: "centre" as const, label: lang === "hi" ? "केंद्र" : "Central" },
     { id: "haryana" as const, label: text.placeHaryana },
   ]
 

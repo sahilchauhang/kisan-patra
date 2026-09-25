@@ -22,8 +22,8 @@ export function SearchForm({
   return (
     <form action="/schemes" className="flex w-full flex-col gap-2 sm:flex-row">
       {category ? <input type="hidden" name="category" value={category} /> : null}
-      {place === "haryana" ? <input type="hidden" name="place" value="haryana" /> : null}
-      {lang === "en" ? <input type="hidden" name="lang" value="en" /> : null}
+      {place ? <input type="hidden" name="place" value={place} /> : null}
+      <input type="hidden" name="lang" value={lang} />
       <label className="sr-only" htmlFor={compact ? "scheme-search" : "home-search"}>
         {text.searchLabel}
       </label>

@@ -19,6 +19,7 @@ export type ReasonCode =
   | "unsureLand"
   | "small"
   | "age"
+  | "ageUncertain"
   | "shg"
   | "group"
   | "startup"
@@ -51,13 +52,13 @@ export function filterSchemes(input: {
 }) {
   const query = input.q?.trim().toLowerCase() ?? ""
   const words = query.split(/\s+/).filter(Boolean)
-  const place = input.place === "haryana" ? "haryana" : "centre"
+  const place = input.place === "haryana" || input.place === "centre" ? input.place : "all"
 
   return schemes.filter((scheme) => {
     const isState = scheme.jurisdiction === "state"
     if (place === "haryana") {
       if (!isState || !scheme.onlyStates?.includes("haryana")) return false
-    } else if (isState) {
+    } else if (place === "centre" && isState) {
       return false
     }
     if (input.category && input.category !== "all" && scheme.category !== input.category) {
@@ -85,11 +86,26 @@ export function filterSchemes(input: {
   })
 }
 
-function ageInRange(age: AgeAnswer, min: number, max: number) {
-  if (age === "under-18") return 17 >= min && 17 <= max
-  if (age === "18-40") return 30 >= min && 30 <= max
-  if (age === "41-59") return 50 >= min && 50 <= max
-  return 65 >= min && 65 <= max
+export type AgeBandRelation = "outside" | "partial" | "inside"
+
+export function ageBandRelation(age: AgeAnswer, min: number, max: number): AgeBandRelation {
+  const [bandMin, bandMax] = age === "under-18"
+    ? [0, 17]
+    : age === "18-40"
+      ? [18, 40]
+      : age === "41-59"
+        ? [41, 59]
+        : [60, Number.POSITIVE_INFINITY]
+
+  if (max < bandMin || min > bandMax) return "outside"
+  if (min <= bandMin && max >= bandMax) return "inside"
+  return "partial"
+}
+
+export function ageReasonCode(relation: AgeBandRelation | undefined) {
+  if (relation === "partial") return "ageUncertain" as const
+  if (relation === "inside") return "age" as const
+  return undefined
 }
 
 function landFits(need: Scheme["land"], land: LandAnswer) {
@@ -122,7 +138,10 @@ export function matchSchemes(answers: FinderAnswers): SchemeMatch[] {
     if (scheme.smallMarginalOnly && answers.holding === "larger" && answers.land === "owner") {
       continue
     }
-    if (scheme.entryAge && !ageInRange(answers.age, scheme.entryAge.min, scheme.entryAge.max)) {
+    const ageRelation = scheme.entryAge
+      ? ageBandRelation(answers.age, scheme.entryAge.min, scheme.entryAge.max)
+      : undefined
+    if (ageRelation === "outside") {
       continue
     }
     if (scheme.jurisdiction === "state") {
@@ -157,6 +176,12 @@ export function matchSchemes(answers: FinderAnswers): SchemeMatch[] {
     let score = 1
     const reasons: MatchReason[] = []
 
+    const ageReason = ageReasonCode(ageRelation)
+    if (ageReason === "ageUncertain") {
+      // Keep possible matches, while making the unresolved age fit visible.
+      reasons.push({ code: ageReason })
+    }
+
     if (overlap.length > 0) {
       score += 5 + overlap.length
       reasons.push({ code: "overlap" })
@@ -183,7 +208,7 @@ export function matchSchemes(answers: FinderAnswers): SchemeMatch[] {
       score += 2
       reasons.push({ code: "small" })
     }
-    if (scheme.entryAge) {
+    if (ageRelation === "inside") {
       score += 2
       reasons.push({ code: "age" })
     }

@@ -21,6 +21,9 @@ export function SiteFooter({ lang }: { lang: Lang }) {
           <Link href="/finder" className="hover:underline">
             {text.footerFit}
           </Link>
+          <Link href="/saved" className="hover:underline">
+            {text.navSaved}
+          </Link>
           <Link href="/schemes?place=haryana" className="hover:underline">
             {text.haryanaLink}
           </Link>

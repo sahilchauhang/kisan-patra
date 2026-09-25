@@ -1,4 +1,6 @@
 import { cropResidueStates, northEastStates } from "@/data/states"
+import { centralAdditions } from "@/data/central-additions"
+import { haryanaAdditions } from "@/data/haryana-additions"
 import type { Scheme } from "@/lib/types"
 
 const agri = "Ministry of Agriculture & Farmers Welfare"
@@ -10,6 +12,7 @@ const mofpi = "Ministry of Food Processing Industries"
 
 export const schemes: Scheme[] = [
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "pm-kisan",
     name: "Pradhan Mantri Kisan Samman Nidhi",
     shortName: "PM-KISAN",
@@ -54,6 +57,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "pm-kmy",
     name: "Pradhan Mantri Kisan Maan Dhan Yojana",
     shortName: "PM-KMY",
@@ -100,6 +104,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "pmfby",
     name: "Pradhan Mantri Fasal Bima Yojana and Restructured Weather Based Crop Insurance",
     shortName: "PMFBY / RWBCIS",
@@ -144,6 +149,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "miss",
     name: "Modified Interest Subvention Scheme",
     shortName: "MISS",
@@ -161,6 +167,7 @@ export const schemes: Scheme[] = [
     whoCanApply: [
       "Farmers who take a short-term loan on a Kisan Credit Card from a participating bank, small finance bank, or a computerised PACS.",
       "The 2025–26 Cabinet continuation and the RBI circular keep the subvention ceiling at ₹3 lakh, even though Budget 2025–26 announced a higher limit. Ask the bank which ceiling is live on the day you borrow.",
+      "In Haryana, the Cooperation Department separately lists a 4% state rebate for short-term crop-loan borrowers through PACS who repay on time, alongside 3% central interest subvention. The department describes eligible timely repayers as receiving interest-free loans; this route is specific to PACS/cooperative crop loans, not all KCC loans.",
     ],
     documents: [
       "Whatever the bank needs to issue or renew a Kisan Credit Card.",
@@ -169,6 +176,7 @@ export const schemes: Scheme[] = [
     howToApply: [
       "You do not file a separate MISS form. The benefit sits inside the KCC loan.",
       "Ask the branch, in writing if you can, to confirm that the loan is covered by MISS and what the prompt-repayment date is.",
+      "Haryana PACS borrowers should confirm current eligibility and repayment terms with their PACS or cooperative bank. The state scheme is listed by the Cooperation Department: https://coop.haryana.gov.in/policies/schemes.",
       "Repay or renew before that date. A late repayment usually loses the 3% incentive for that year.",
     ],
     watchouts: [
@@ -185,6 +193,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "kcc",
     name: "Kisan Credit Card",
     shortName: "KCC",
@@ -229,6 +238,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "aif",
     name: "Agriculture Infrastructure Fund",
     shortName: "AIF",
@@ -270,6 +280,7 @@ export const schemes: Scheme[] = [
     applyAs: "group",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "fpo",
     name: "Formation and Promotion of 10,000 Farmer Producer Organisations",
     shortName: "10,000 FPO scheme",
@@ -310,6 +321,7 @@ export const schemes: Scheme[] = [
     applyAs: "group",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "nbhm",
     name: "National Beekeeping and Honey Mission",
     shortName: "NBHM",
@@ -350,6 +362,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "namo-drone-didi",
     name: "Namo Drone Didi",
     shortName: "Namo Drone Didi",
@@ -391,6 +404,7 @@ export const schemes: Scheme[] = [
     applyAs: "group",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "nmnf",
     name: "National Mission on Natural Farming",
     shortName: "NMNF",
@@ -429,6 +443,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "pm-aasha",
     name: "Pradhan Mantri Annadata Aay Sanrakshan Abhiyan",
     shortName: "PM-AASHA",
@@ -468,6 +483,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "agrisure",
     name: "Agri Fund for Start-Ups & Rural Enterprises",
     shortName: "AgriSURE",
@@ -505,6 +521,7 @@ export const schemes: Scheme[] = [
     applyAs: "startup",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "pdmc",
     name: "Per Drop More Crop",
     shortName: "PDMC",
@@ -529,7 +546,9 @@ export const schemes: Scheme[] = [
       "A soil and water test, if the state asks for one before sanction.",
     ],
     howToApply: [
-      "Apply on the state micro-irrigation portal or at the horticulture office before you pay the full cost.",
+      "In Haryana, MICADA implements the PDMC micro-irrigation component. Apply through the MICADA farmer portal before buying or installing a system: https://micada.haryana.gov.in/.",
+      "Haryana also lists on-farm water tanks as a separate route under its micro-irrigation programme. Check MICADA’s current tank application window and sanction before starting construction; tank assistance is not the drip/sprinkler subsidy.",
+      "In other states, apply on the state micro-irrigation portal or at the horticulture office before you pay the full cost.",
       "Buy only from the empanelled company named in the sanction. A system bought earlier is usually not reimbursed.",
       "Subsidy is often paid to the supplier, and you pay the farmer’s share. Confirm that split in the work order.",
     ],
@@ -538,7 +557,7 @@ export const schemes: Scheme[] = [
       "Canal and groundwater works under the wider PMKSY are built by departments. They are not a personal drip subsidy.",
     ],
     officialUrl: "https://agriwelfare.gov.in/",
-    officialLabel: "Department of Agriculture & Farmers Welfare",
+    officialLabel: "Department of Agriculture & Farmers Welfare; Haryana applications via MICADA",
     list: "ministry-2026",
     featured: true,
     keywords: ["drip", "sprinkler", "micro irrigation", "per drop", "pmksy", "sinchayee", "water"],
@@ -548,6 +567,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "smam",
     name: "Sub-Mission on Agricultural Mechanization",
     shortName: "SMAM",
@@ -590,6 +610,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "pkvy",
     name: "Paramparagat Krishi Vikas Yojana",
     shortName: "PKVY",
@@ -629,6 +650,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "soil-health",
     name: "Soil Health Card and Soil Health & Fertility",
     shortName: "Soil Health Card",
@@ -667,6 +689,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "rad",
     name: "Rainfed Area Development",
     shortName: "RAD",
@@ -703,6 +726,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "agroforestry",
     name: "Agroforestry",
     shortName: "Agroforestry",
@@ -739,6 +763,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "cdp",
     name: "Crop Diversification Programme",
     shortName: "CDP",
@@ -776,6 +801,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "smae",
     name: "Sub-Mission on Agricultural Extension",
     shortName: "SMAE / ATMA",
@@ -813,6 +839,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "smsp",
     name: "Sub-Mission on Seeds and Planting Material",
     shortName: "SMSP",
@@ -850,6 +877,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "nfsnm",
     name: "National Food Security and Nutrition Mission",
     shortName: "NFSNM",
@@ -885,6 +913,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "isam",
     name: "Integrated Scheme for Agricultural Marketing",
     shortName: "ISAM",
@@ -922,6 +951,7 @@ export const schemes: Scheme[] = [
     applyAs: "group",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "enam",
     name: "National Agriculture Market",
     shortName: "e-NAM",
@@ -961,6 +991,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "midh",
     name: "Mission for Integrated Development of Horticulture",
     shortName: "MIDH",
@@ -985,6 +1016,8 @@ export const schemes: Scheme[] = [
     ],
     howToApply: [
       "Apply to the district horticulture officer before construction or planting.",
+      "In Haryana, check the IHD/SCSP/MIDH crop-production components and current application window on the horticulture department’s farmer portal: https://hortnet.hortharyana.gov.in/.",
+      "Register, choose the relevant component, and upload the requested documents through the portal. The district horticulture office verifies applications; availability and assistance depend on the component and current state guidelines.",
       "Use the planting material and the specifications in the sanction.",
       "Subsidy is released after inspection. Keep the plants alive until then.",
     ],
@@ -992,8 +1025,8 @@ export const schemes: Scheme[] = [
       "A polyhouse built without prior sanction is the most common rejected claim.",
       "Cost norms are ceilings. If your invoice is higher, the extra is yours.",
     ],
-    officialUrl: "https://midh.gov.in/",
-    officialLabel: "midh.gov.in",
+    officialUrl: "https://hortnet.hortharyana.gov.in/",
+    officialLabel: "Haryana Horticulture farmer portal (MIDH)",
     list: "ministry-2026",
     keywords: ["horticulture", "polyhouse", "orchard", "nursery", "mango", "vegetable", "greenhouse"],
     activities: ["horticulture"],
@@ -1001,6 +1034,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "nmeo-oil-palm",
     name: "National Mission on Edible Oils — Oil Palm",
     shortName: "NMEO-OP",
@@ -1040,6 +1074,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "nmeo-oilseeds",
     name: "National Mission on Edible Oils — Oilseeds",
     shortName: "NMEO-Oilseeds",
@@ -1075,6 +1110,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "movcdner",
     name: "Mission Organic Value Chain Development for the North Eastern Region",
     shortName: "MOVCDNER",
@@ -1113,6 +1149,7 @@ export const schemes: Scheme[] = [
     applyAs: "group",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "digital-agriculture",
     name: "Digital Agriculture Mission",
     shortName: "Digital Agriculture",
@@ -1151,6 +1188,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "national-bamboo-mission",
     name: "National Bamboo Mission",
     shortName: "National Bamboo Mission",
@@ -1187,6 +1225,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "pm-kusum",
     name: "Pradhan Mantri Kisan Urja Suraksha evam Utthaan Mahabhiyan",
     shortName: "PM-KUSUM",
@@ -1210,7 +1249,8 @@ export const schemes: Scheme[] = [
       "An electricity connection paper, if you are solarising a grid pump.",
     ],
     howToApply: [
-      "Apply on the state PM-KUSUM portal or through the discom when a round is open.",
+      "In Haryana, apply online through the SARAL Haryana service when applications are open: https://saralharyana.gov.in/. HAREDA describes the solar-pump programme as a 75% combined subsidy (30% Centre and 45% Haryana); check the current notice and your farmer share before paying.",
+      "In other states, apply on the state PM-KUSUM portal or through the discom when a round is open.",
       "Pay only the farmer’s share to the empanelled vendor named in the allotment.",
       "The pump is inspected after installation. Subsidy is not a cashback for a pump you already bought in the market.",
     ],
@@ -1218,8 +1258,8 @@ export const schemes: Scheme[] = [
       "Benchmark costs and the farmer’s share change with each tender. Read the allotment letter.",
       "A solar pump still needs a water source. The scheme does not dig the borewell.",
     ],
-    officialUrl: "https://pmkusum.mnre.gov.in/",
-    officialLabel: "PM-KUSUM portal",
+    officialUrl: "https://hareda.gov.in/about-department/solar-water-pumping-programme/",
+    officialLabel: "HAREDA — Haryana solar water pumping programme",
     list: "allied",
     keywords: ["solar", "pump", "kusum", "renewable", "bijli"],
     activities: ["irrigation"],
@@ -1227,6 +1267,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "pmmsy",
     name: "Pradhan Mantri Matsya Sampada Yojana",
     shortName: "PMMSY",
@@ -1252,6 +1293,7 @@ export const schemes: Scheme[] = [
     ],
     howToApply: [
       "Apply to the district fisheries officer when the state opens applications.",
+      "In Haryana, browse the Fisheries Department’s PMMSY component list for the activity-specific eligibility, assistance, and service link: https://harfish.gov.in/provider/joint-venture-central-state/. Some component pages link applications to SARAL Haryana.",
       "Start work after sanction. Include the specifications from the cost norm.",
       "Subsidy follows inspection. Keep bills in the beneficiary’s name.",
     ],
@@ -1259,8 +1301,8 @@ export const schemes: Scheme[] = [
       "A pond dug before sanction is a frequent rejection.",
       "Marine and inland components have different rules. Ask which one your site falls under.",
     ],
-    officialUrl: "https://pmmsy.dof.gov.in/",
-    officialLabel: "PMMSY portal",
+    officialUrl: "https://harfish.gov.in/provider/joint-venture-central-state/",
+    officialLabel: "Haryana Fisheries Department — PMMSY components",
     list: "allied",
     keywords: ["fish", "fisheries", "pond", "shrimp", "matsya", "boat"],
     activities: ["fisheries"],
@@ -1268,6 +1310,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "nlm",
     name: "National Livestock Mission",
     shortName: "NLM",
@@ -1305,6 +1348,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "rashtriya-gokul-mission",
     name: "Rashtriya Gokul Mission",
     shortName: "Rashtriya Gokul Mission",
@@ -1340,6 +1384,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "ahidf",
     name: "Animal Husbandry Infrastructure Development Fund",
     shortName: "AHIDF",
@@ -1376,6 +1421,7 @@ export const schemes: Scheme[] = [
     applyAs: "startup",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "pmfme",
     name: "Pradhan Mantri Formalisation of Micro Food Processing Enterprises",
     shortName: "PMFME",
@@ -1416,6 +1462,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "rkvy",
     name: "Rashtriya Krishi Vikas Yojana",
     shortName: "RKVY",
@@ -1451,6 +1498,7 @@ export const schemes: Scheme[] = [
     applyAs: "through-state",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "crop-residue",
     name: "Crop Residue Management",
     shortName: "Crop Residue Management",
@@ -1489,6 +1537,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "mfmb",
     name: "Meri Fasal Mera Byora",
     shortName: "Meri Fasal Mera Byora",
@@ -1531,6 +1580,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "mpmv",
     name: "Mera Pani Meri Virasat",
     shortName: "Mera Pani Meri Virasat",
@@ -1573,6 +1623,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "haryana-dsr",
     name: "Direct Seeded Rice incentive",
     shortName: "Haryana DSR incentive",
@@ -1611,6 +1662,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "bhavantar-bharpai",
     name: "Bhavantar Bharpai Yojana",
     shortName: "Bhavantar Bharpai",
@@ -1623,6 +1675,7 @@ export const schemes: Scheme[] = [
     whatYouGet: [
       "A direct transfer of the difference between the protected price and the price on the mandi J-form, up to the yield ceiling in the rules.",
       "Cover for the vegetables, fruits, and spices the horticulture department notifies that season.",
+      "Haryana’s department has also listed honey registration and guidelines. For honey, register and complete verification through the notified beekeeper process, then sell through the Honey Trade Centre at Ramnagar during the prescribed sale period to qualify for the incentive.",
     ],
     whoCanApply: [
       "Horticulture growers in Haryana who registered the crop and sold it in a Haryana State Agricultural Marketing Board mandi.",
@@ -1635,24 +1688,27 @@ export const schemes: Scheme[] = [
     howToApply: [
       "Register the crop on fasal.haryana.gov.in during the window for that crop.",
       "Sell in the notified mandi so a J-form is generated. A private sale without that form is not paid.",
+      "For honey, register on the Madhukranti portal and complete box and beekeeper verification with the horticulture department; only sales through the Honey Trade Centre at Ramnagar during its prescribed sale period qualify. Check the current honey notice before selling.",
       "Track the claim on the Bhavantar Bharpai portal, bby.hortharyana.gov.in.",
     ],
     watchouts: [
       "Payment is capped at a standard yield per acre. Extra quantity above that cap is not compensated.",
       "The protected price and the crop list change. Read this season’s notification.",
+      "Honey is a listed route with its own registration, verification, and sale process. Do not assume bajra is covered by the horticulture Bhavantar entry without a current season notice.",
     ],
     officialUrl: "https://bby.hortharyana.gov.in/",
     officialLabel: "Bhavantar Bharpai portal",
     list: "state",
     jurisdiction: "state",
     featured: true,
-    keywords: ["haryana", "bhavantar", "bharpai", "vegetable", "horticulture", "j-form", "mandi"],
-    activities: ["horticulture", "marketing"],
+    keywords: ["haryana", "bhavantar", "bharpai", "vegetable", "horticulture", "honey", "beekeeping", "madhukranti", "j-form", "mandi"],
+    activities: ["horticulture", "marketing", "bees"],
     land: "cultivator",
     onlyStates: ["haryana"],
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "haryana-desi-cotton",
     name: "Desi cotton incentive",
     shortName: "Desi cotton incentive",
@@ -1691,6 +1747,7 @@ export const schemes: Scheme[] = [
     applyAs: "person",
   },
   {
+    editorialUpdatedOn: "2026-09-26",
     slug: "haryana-jeevan-suraksha",
     name: "Mukhyamantri Kisan evam Khetihar Mazdoor Jeevan Suraksha Yojana",
     shortName: "Khetihar Jeevan Suraksha",
@@ -1730,6 +1787,8 @@ export const schemes: Scheme[] = [
     onlyStates: ["haryana"],
     applyAs: "person",
   },
+  ...centralAdditions,
+  ...haryanaAdditions,
 ]
 
 export const ministryListCount = schemes.filter(

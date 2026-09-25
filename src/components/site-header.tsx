@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Menu } from "lucide-react"
 
 import { LanguageToggle } from "@/components/language-toggle"
+import { VisitorNavLink } from "@/components/visitor-nav-link"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -43,6 +44,7 @@ export function SiteHeader({ lang }: { lang: Lang }) {
                 {link.label}
               </Link>
             ))}
+            <VisitorNavLink lang={lang} />
           </nav>
           <div className="md:hidden">
             <Sheet>
@@ -67,6 +69,7 @@ export function SiteHeader({ lang }: { lang: Lang }) {
                       {link.label}
                     </Link>
                   ))}
+                  <VisitorNavLink lang={lang} />
                 </nav>
               </SheetContent>
             </Sheet>

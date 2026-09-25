@@ -58,6 +58,8 @@ export type Scheme = {
   watchouts: string[]
   officialUrl: string
   officialLabel: string
+  editorialUpdatedOn: string
+  lastVerifiedOn?: string
   list: SchemeList
   jurisdiction?: Jurisdiction
   featured?: boolean

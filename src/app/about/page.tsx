@@ -39,6 +39,23 @@ export default async function AboutPage() {
       <p className={eyebrowClass(lang)}>{text.aboutEyebrow}</p>
       <h1 className="mt-2 font-heading text-4xl sm:text-5xl">{text.aboutTitle}</h1>
       <p className="mt-4 text-base leading-7 text-foreground/85">{text.aboutLead}</p>
+      <section className="mt-6 rounded-2xl border border-border bg-card p-4 sm:p-6">
+        <h2 className="font-heading text-2xl">{lang === "hi" ? "स्रोत और सीमाएँ" : "Sources and limits"}</h2>
+        <ul className="mt-3 space-y-3 text-sm leading-6 text-foreground/85">
+          <li>{lang === "hi"
+            ? "यह चयनित सूची है: कृषि मंत्रालय की 3 फरवरी 2026 की संसदीय सूची, कुछ अन्य केंद्रीय कार्यक्रम और हरियाणा की चुनी हुई योजनाएँ। यह सभी सरकारी योजनाओं की पूरी सूची नहीं है।"
+            : "This is a selected register: the Ministry of Agriculture’s parliamentary list dated 3 February 2026, some other central programmes, and selected Haryana schemes. It is not a complete list of every government scheme."}</li>
+          <li>{lang === "hi"
+            ? "हर योजना पर प्रविष्टि अपडेट की तारीख और, जहाँ दर्ज हो, आधिकारिक स्रोत की जाँच की तारीख दी है। जाँच की तारीख मौजूदा पात्रता या आवेदन खुला होने की गारंटी नहीं है।"
+            : "Each scheme page shows when its entry was updated and, when recorded, when its official source was checked. A check date does not confirm current eligibility or an open application window."}</li>
+          <li>{lang === "hi"
+            ? "आधिकारिक लिंक सूचना पन्ने या घोषणा पर जा सकता है; जरूरी नहीं कि वह आवेदन फ़ॉर्म हो। आवेदन से पहले तारीख, प्रक्रिया, पात्रता और शुल्क संबंधित विभाग से जाँचें।"
+            : "An official link may lead to an information page or announcement; it may not be an application form. Confirm dates, process, eligibility, and fees with the department before applying."}</li>
+          <li>{lang === "hi"
+            ? "योजना का सार पढ़ने में मदद के लिए है, मंजूरी या लाभ का वादा नहीं। अंतिम नियम विभागीय अधिसूचना और स्थानीय कार्यान्वयन से तय होते हैं।"
+            : "Scheme summaries are a reading aid, not an approval or promise of benefits. Department notices and local implementation set the final rules."}</li>
+        </ul>
+      </section>
       <Accordion className="mt-8">
         {text.faqs.map((item) => (
           <AccordionItem key={item.id} value={item.id}>

@@ -7,7 +7,7 @@ import { getLang } from "@/lib/language"
 export const metadata: Metadata = {
   title: "What fits me",
   description:
-    "Answer a few questions and see which central farmer schemes, and Haryana schemes, may match your land, age, and work.",
+    "Choose your state and farm work to build a shortlist of schemes that may fit. Add optional details, then check each scheme’s current eligibility and application requirements.",
 }
 
 export default async function FinderPage() {
