@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 3847",
     "lint": "eslint",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "monitor": "node scripts/monitor/cli.mjs",
+    "monitor:scan": "node scripts/monitor/cli.mjs scan",
+    "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

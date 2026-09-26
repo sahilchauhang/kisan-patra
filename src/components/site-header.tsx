@@ -19,6 +19,7 @@ export function SiteHeader({ lang }: { lang: Lang }) {
   const links = [
     { href: "/schemes", label: text.navRegister },
     { href: "/finder", label: text.navFinder },
+    { href: "/updates", label: lang === "hi" ? "नई सूचनाएँ" : "Updates" },
     { href: "/about", label: text.navSources },
   ]
 

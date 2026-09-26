@@ -2,6 +2,7 @@ import { cropResidueStates, northEastStates } from "@/data/states"
 import { centralAdditions } from "@/data/central-additions"
 import { haryanaAdditions } from "@/data/haryana-additions"
 import type { Scheme } from "@/lib/types"
+import { withPolicyMetadata } from "@/data/policy-metadata"
 
 const agri = "Ministry of Agriculture & Farmers Welfare"
 const finance = "Department of Financial Services / banks, with interest support from the Centre"
@@ -10,7 +11,7 @@ const fisheries = "Department of Fisheries"
 const dahd = "Department of Animal Husbandry & Dairying"
 const mofpi = "Ministry of Food Processing Industries"
 
-export const schemes: Scheme[] = [
+const catalogue: Scheme[] = [
   {
     editorialUpdatedOn: "2026-09-26",
     slug: "pm-kisan",
@@ -1790,6 +1791,8 @@ export const schemes: Scheme[] = [
   ...centralAdditions,
   ...haryanaAdditions,
 ]
+
+export const schemes: Scheme[] = catalogue.map(withPolicyMetadata)
 
 export const ministryListCount = schemes.filter(
   (scheme) => scheme.list === "ministry-2026"

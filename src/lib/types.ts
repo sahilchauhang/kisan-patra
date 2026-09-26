@@ -42,6 +42,44 @@ export type ApplyAs = "person" | "group" | "startup" | "through-state"
 
 export type LandNeed = "owner" | "cultivator" | "any"
 
+export type BilingualText = { en: string; hi: string }
+export type OfficialEvidence = {
+  url: string
+  title: BilingualText
+  publishedOn?: string
+  effectiveOn?: string
+  retrievedOn: string
+  excerpt: string
+}
+export type ProgrammeLifecycle = {
+  status: "unknown" | "announced" | "operational" | "retired" | "replaced"
+  effectiveOn?: string
+  successorSlug?: string
+  evidence?: OfficialEvidence
+}
+export type ApplicationWindow = {
+  status: "unknown" | "announced" | "open" | "closed"
+  opensOn?: string
+  closesOn?: string
+  label?: BilingualText
+  evidence?: OfficialEvidence
+}
+export type FarmerNotice = {
+  id: string
+  title: BilingualText
+  body: BilingualText
+  action: BilingualText
+  audience: BilingualText
+  publishedOn: string
+  effectiveOn?: string
+  deadline?: string
+  previewUntil: string
+  archived?: boolean
+  schemeSlugs: string[]
+  evidence: OfficialEvidence[]
+  approval: { proposalId: string; version: number }
+}
+
 export type Scheme = {
   slug: string
   name: string
@@ -60,6 +98,9 @@ export type Scheme = {
   officialLabel: string
   editorialUpdatedOn: string
   lastVerifiedOn?: string
+  evidence?: OfficialEvidence[]
+  lifecycle?: ProgrammeLifecycle
+  applicationWindow?: ApplicationWindow
   list: SchemeList
   jurisdiction?: Jurisdiction
   featured?: boolean
