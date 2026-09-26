@@ -2,6 +2,7 @@ import { categoryLabel } from "@/data/categories"
 import { schemeHi } from "@/data/scheme-hi"
 import { schemes } from "@/data/schemes"
 import { schemeSearchText } from "@/lib/localize"
+import { isDiscoverable } from "@/lib/policy"
 import type { Lang } from "@/lib/language"
 import type {
   AgeAnswer,
@@ -35,6 +36,7 @@ export function getScheme(slug: string) {
 
 export function relatedSchemes(scheme: Scheme, count = 3) {
   const pool = schemes.filter((item) => {
+    if (!isDiscoverable(item)) return false
     if (item.slug === scheme.slug) return false
     if (scheme.jurisdiction === "state") return item.jurisdiction === "state"
     return item.jurisdiction !== "state"
@@ -134,6 +136,7 @@ export function matchSchemes(answers: FinderAnswers): SchemeMatch[] {
   const matches: SchemeMatch[] = []
 
   for (const scheme of schemes) {
+    if (!isDiscoverable(scheme)) continue
     if (!landFits(scheme.land, answers.land)) continue
     if (scheme.smallMarginalOnly && answers.holding === "larger" && answers.land === "owner") {
       continue

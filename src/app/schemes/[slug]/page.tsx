@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 
 import { SchemeCard } from "@/components/scheme-card"
@@ -105,6 +106,14 @@ export default async function SchemePage({
       {scheme.whoCanApply.length > 1 ? <Section title={lang === "hi" ? "पात्रता की अन्य शर्तें" : "More eligibility details"} items={scheme.whoCanApply.slice(1)} /> : null}
       {scheme.documents.length > 0 ? <Section title={text.papers} items={scheme.documents} /> : null}
       <div className="mt-8">
+        {source.lifecycle?.successorSlug && <p className="mb-4"><Link className="text-primary underline" href={`/schemes/${source.lifecycle.successorSlug}`}>{lang === "hi" ? "उत्तराधिकारी योजना देखें" : "View successor programme"}</Link></p>}
+        {(source.evidence?.length || source.lifecycle?.evidence) ? <section className="mb-8">
+          <h2 className="font-heading text-2xl">{lang === "hi" ? "आधिकारिक साक्ष्य" : "Official evidence"}</h2>
+          <ul className="mt-3 space-y-3 text-sm">{[...(source.evidence ?? []), ...(source.lifecycle?.evidence ? [source.lifecycle.evidence] : [])].map((evidence, index) => <li key={`${evidence.url}-${index}`}>
+            <a href={evidence.url} className="text-primary underline" target="_blank" rel="noreferrer">{evidence.title[lang]}</a>
+            <p>{lang === "hi" ? "स्रोत जाँचा" : "Checked"}: {evidence.retrievedOn}{evidence.publishedOn ? ` · ${lang === "hi" ? "प्रकाशित" : "Published"}: ${evidence.publishedOn}` : ""}{evidence.effectiveOn ? ` · ${lang === "hi" ? "लागू" : "Effective"}: ${evidence.effectiveOn}` : ""}</p>
+          </li>)}</ul>
+        </section> : null}
         <h2 className="font-heading text-2xl">{text.howToApply}</h2>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6">
           {scheme.howToApply.map((step) => (

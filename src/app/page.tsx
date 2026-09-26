@@ -4,6 +4,8 @@ import { ArrowRight, Bookmark, CalendarDays, Sprout } from "lucide-react"
 
 import { SchemeCard } from "@/components/scheme-card"
 import { HomeContinue } from "@/components/home-continue"
+import { UpdatesPreview } from "@/components/farmer-updates"
+import { isDiscoverable } from "@/lib/policy"
 import { buttonVariants } from "@/components/ui/button"
 import { categories, categoryBlurb, categoryLabel } from "@/data/categories"
 import { alliedCount, ministryListCount, schemes } from "@/data/schemes"
@@ -25,8 +27,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const lang = await getLang()
   const text = t(lang)
-  const featured = schemes.filter((scheme) => scheme.featured && scheme.jurisdiction !== "state")
-  const starters = starterSlugs.map((slug) => schemes.find((scheme) => scheme.slug === slug)).filter((item) => item !== undefined)
+  const featured = schemes.filter((scheme) => isDiscoverable(scheme) && scheme.featured && scheme.jurisdiction !== "state")
+  const starters = starterSlugs.map((slug) => schemes.find((scheme) => scheme.slug === slug && isDiscoverable(scheme))).filter((item) => item !== undefined)
   const summaries = schemes.map((scheme) => ({
     slug: scheme.slug,
     name: lang === "hi" ? scheme.localName : scheme.shortName || scheme.name,
@@ -80,6 +82,7 @@ export default async function HomePage() {
       </section>
 
       <HomeContinue lang={lang} summaries={summaries} />
+      <UpdatesPreview lang={lang} />
 
       <section className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
         <div className="flex items-end justify-between gap-4">

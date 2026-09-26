@@ -15,6 +15,7 @@ export function SiteFooter({ lang }: { lang: Lang }) {
           </p>
         </div>
         <div className="flex flex-col gap-2 text-sm">
+          <Link href="/updates" className="hover:underline">{lang === "hi" ? "नई सूचनाएँ और पुरालेख" : "Updates and archive"}</Link>
           <Link href="/schemes" className="hover:underline">
             {text.footerBrowse}
           </Link>

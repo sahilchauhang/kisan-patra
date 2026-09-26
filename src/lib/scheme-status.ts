@@ -1,35 +1,28 @@
 import type { Lang } from "@/lib/language"
 import type { Scheme } from "@/lib/types"
+import { indiaDay } from "@/lib/policy"
 
 export type SchemeStatus = { label: string; nextAction: string }
 
-/** Status is deliberately explicit: free-form scheme prose is not reliable evidence of an open window. */
 export function schemeStatus(scheme: Scheme, lang: Lang, today?: Date): SchemeStatus {
-  if (scheme.slug === "haryana-cotton-micronutrients-ipm") {
-    return lang === "hi"
-      ? { label: "2026 की बिल जमा करने की तारीख 15 सितंबर बीत चुकी है", nextAction: "विभाग से पूछें कि अवधि बढ़ी है या बाद में दावा स्वीकार होगा।" }
-      : { label: "2026 bill deadline of 15 September has passed", nextAction: "Ask the department whether it extended the window or will accept a later claim." }
+  const hi = lang === "hi"
+  const lifecycle = scheme.lifecycle?.status ?? "unknown"
+  if (lifecycle === "retired" || lifecycle === "replaced") return {
+    label: hi ? (lifecycle === "replaced" ? "योजना की जगह नई योजना लागू है" : "योजना समाप्त की गई है") : (lifecycle === "replaced" ? "Programme replaced" : "Programme retired"),
+    nextAction: hi ? "नीचे आधिकारिक आदेश और उत्तराधिकारी योजना की जानकारी देखें।" : "See the official order and any successor programme below.",
   }
-  if (scheme.slug === "haryana-sugarcane-planting-incentive") {
-    const day = today ? new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime() : undefined
-    const start = new Date(2026, 9, 15).getTime()
-    const end = new Date(2026, 11, 31).getTime()
-    if (day !== undefined && day > end) {
-      return lang === "hi"
-        ? { label: "घोषित आवेदन अवधि 31 दिसंबर 2026 को समाप्त हुई", nextAction: "अगली अवधि या विस्तार के लिए राज्य विभाग से पूछें।" }
-        : { label: "Announced application window ended on 31 December 2026", nextAction: "Ask the state department about an extension or the next window." }
-    }
-    if (day !== undefined && day >= start) {
-      return lang === "hi"
-        ? { label: "घोषित अवधि चल रही है: 15 अक्टूबर–31 दिसंबर 2026", nextAction: "आवेदन से पहले राज्य पोर्टल की मौजूदा सूचना की पुष्टि करें।" }
-        : { label: "Announced window is in progress: 15 October–31 December 2026", nextAction: "Confirm the current notice on the state portal before applying." }
-    }
-    return lang === "hi"
-      ? { label: "घोषित आवेदन अवधि: 15 अक्टूबर–31 दिसंबर 2026", nextAction: "अवधि शुरू होने पर राज्य पोर्टल की सूचना देखें।" }
-      : { label: "Announced application window: 15 October–31 December 2026", nextAction: "Check the state portal notice when the announced window begins." }
+  const window = scheme.applicationWindow
+  const day = today ? indiaDay(today) : undefined
+  const dates = [window?.opensOn, window?.closesOn].filter(Boolean).join(" – ")
+  if (window?.status === "closed" || (day && window?.closesOn && day > window.closesOn)) return {
+    label: hi ? `आवेदन अवधि समाप्त${dates ? `: ${dates}` : ""}` : `Application window closed${dates ? `: ${dates}` : ""}`,
+    nextAction: hi ? "विभाग से विस्तार या अगली अवधि पूछें। अवधि बंद होने का अर्थ योजना समाप्त होना नहीं है।" : "Ask the department about an extension or next window. A closed window does not mean the programme has retired.",
   }
-
-  return lang === "hi"
+  if (window && window.status !== "unknown") return {
+    label: `${window.label?.[lang] ?? (hi ? "आवेदन अवधि" : "Application window")}${dates ? `: ${dates}` : ""}`,
+    nextAction: hi ? "आवेदन से पहले आधिकारिक पोर्टल पर वर्तमान सूचना और तारीख की पुष्टि करें।" : "Confirm the current notice and dates on the official portal before applying.",
+  }
+  return hi
     ? { label: "आवेदन की मौजूदा स्थिति यहाँ पुष्ट नहीं है", nextAction: "आवेदन की तारीख और प्रक्रिया आधिकारिक विभाग से जाँचें।" }
     : { label: "Current application status is not confirmed here", nextAction: "Check application dates and the process with the official department." }
 }
