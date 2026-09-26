@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
-import { PlaceSwitch } from "@/components/place-switch"
 import { SchemeCard } from "@/components/scheme-card"
 import { SearchForm } from "@/components/search-form"
 import { categories, categoryLabel } from "@/data/categories"
@@ -19,19 +18,20 @@ export const metadata: Metadata = {
 
 type Place = "all" | "centre" | "haryana"
 
-function hrefFor(q: string, category: string, place: Place, lang: "en" | "hi") {
+function hrefFor(q: string, category: string, place: Place, lang: "en" | "hi", page?: number) {
   const params = new URLSearchParams()
   if (q) params.set("q", q)
   if (category && category !== "all") params.set("category", category)
   if (place !== "all") params.set("place", place)
   params.set("lang", lang)
+  if (page && page > 1) params.set("page", String(page))
   return `/schemes?${params.toString()}`
 }
 
 export default async function SchemesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string | string[]; category?: string | string[]; place?: string | string[] }>
+  searchParams: Promise<{ q?: string | string[]; category?: string | string[]; place?: string | string[]; page?: string | string[] }>
 }) {
   const lang = await getLang()
   const text = t(lang)
@@ -47,6 +47,15 @@ export default async function SchemesPage({
       ? scheme.jurisdiction === "state" && scheme.onlyStates?.includes("haryana")
       : scheme.jurisdiction !== "state").length
   const results = filterSchemes({ q, category: activeCategory, place, lang })
+  const pageSize = 12
+  const pageCount = Math.max(1, Math.ceil(results.length / pageSize))
+  const requestedPage = typeof params.page === "string" && /^\d+$/.test(params.page)
+    ? Number(params.page)
+    : 1
+  const currentPage = Math.min(Math.max(requestedPage, 1), pageCount)
+  const pageResults = results.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+  const firstResult = results.length === 0 ? 0 : (currentPage - 1) * pageSize + 1
+  const lastResult = Math.min(currentPage * pageSize, results.length)
   const otherPlace: Place | undefined = place === "haryana" ? "centre" : place === "centre" ? "haryana" : undefined
   const otherScopeResults = otherPlace && q
     ? filterSchemes({ q, category: activeCategory, place: otherPlace, lang })
@@ -56,6 +65,11 @@ export default async function SchemesPage({
     { id: "all", label: lang === "hi" ? "सभी श्रेणियाँ" : "All categories" },
     ...categories.map((item) => ({ id: item.id, label: categoryLabel(item.id, lang) })),
   ]
+  const placeOptions = [
+    { id: "all" as const, label: lang === "hi" ? "सभी योजनाएँ" : "All schemes" },
+    { id: "centre" as const, label: lang === "hi" ? "केंद्र" : "Central" },
+    { id: "haryana" as const, label: lang === "hi" ? "हरियाणा" : "Haryana" },
+  ]
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-10">
@@ -64,10 +78,38 @@ export default async function SchemesPage({
         {lang === "hi" && place === "all" ? "योजनाओं की सूची" : place === "haryana" ? text.haryanaTitle : text.registerTitle}
       </h1>
       <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground sm:mt-3 sm:text-base sm:leading-7">
-        {place === "haryana" ? text.haryanaBody : text.registerLead}
+        {place === "haryana"
+          ? lang === "hi"
+            ? "हरियाणा की योजनाओं के आवेदन और तारीखें अलग-अलग हैं; ताज़ा सूचना योजना के आधिकारिक पन्ने पर देखें।"
+            : "Application routes and deadlines vary by Haryana scheme; check its latest official notice before applying."
+          : text.registerLead}
       </p>
       <div className="mt-4 sm:mt-6">
-        <PlaceSwitch lang={lang} place={place} q={q} category={activeCategory} />
+        <div className="space-y-2">
+          <p className="text-sm font-medium">{text.placeLabel}</p>
+          <div className="flex flex-wrap gap-2" role="group" aria-label={text.placeLabel}>
+            {placeOptions.map((option) => (
+              <Link
+                key={option.id}
+                href={hrefFor(q, activeCategory, option.id, lang)}
+                aria-current={place === option.id ? "page" : undefined}
+                className={cn(
+                  "inline-flex min-h-11 items-center rounded-full px-3 py-1.5 text-sm",
+                  place === option.id
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-card ring-1 ring-foreground/10 hover:bg-muted"
+                )}
+              >
+                {option.label}
+              </Link>
+            ))}
+          </div>
+          <p className="max-w-2xl text-sm leading-5 text-muted-foreground">
+            {lang === "hi"
+              ? "केंद्र की योजनाएँ और हरियाणा के चुनिंदा कार्यक्रम; बाकी राज्य अभी शामिल नहीं हैं। आवेदन से पहले ताज़ा आधिकारिक सूचना देखें।"
+              : "Central schemes and selected Haryana programmes; other states aren’t loaded yet. Check current official notices before applying."}
+          </p>
+        </div>
       </div>
       <div className="mt-4 sm:mt-6">
         <SearchForm
@@ -91,18 +133,18 @@ export default async function SchemesPage({
             id="scheme-category"
             name="category"
             defaultValue={activeCategory}
-            className="h-10 min-w-0 flex-1 rounded-xl border border-input bg-card px-3 text-sm"
+            className="h-11 min-h-11 min-w-0 flex-1 rounded-xl border border-input bg-card px-3 text-sm"
           >
             {categoryOptions.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}
           </select>
-          <button type="submit" className="rounded-xl bg-secondary px-4 text-sm font-medium">
+          <button type="submit" className="min-h-11 rounded-xl bg-secondary px-4 text-sm font-medium">
             {lang === "hi" ? "दिखाएँ" : "Show"}
           </button>
         </form>
         <nav aria-label={lang === "hi" ? "लोकप्रिय श्रेणियाँ" : "Popular categories"} className="flex gap-2 overflow-x-auto pb-1 sm:hidden">
           {commonCategories.map((id) => (
             <Link key={id} href={hrefFor(q, id, place, lang)} className={cn(
-              "shrink-0 rounded-full px-3 py-1.5 text-sm",
+              "inline-flex min-h-11 shrink-0 items-center rounded-full px-3 py-1.5 text-sm",
               activeCategory === id ? "bg-primary text-primary-foreground" : "bg-card ring-1 ring-foreground/10 hover:bg-muted"
             )}>{categoryLabel(id as (typeof categories)[number]["id"], lang)}</Link>
           ))}
@@ -110,7 +152,7 @@ export default async function SchemesPage({
         <nav aria-label={lang === "hi" ? "श्रेणियाँ" : "Categories"} className="hidden flex-wrap gap-2 sm:flex">
           {categoryOptions.map((item) => (
             <Link key={item.id} href={hrefFor(q, item.id, place, lang)} aria-current={activeCategory === item.id ? "page" : undefined} className={cn(
-              "shrink-0 rounded-full px-3 py-1.5 text-sm",
+              "inline-flex min-h-11 shrink-0 items-center rounded-full px-3 py-1.5 text-sm",
               activeCategory === item.id ? "bg-primary text-primary-foreground" : "bg-card ring-1 ring-foreground/10 hover:bg-muted"
             )}>{item.label}</Link>
           ))}
@@ -140,14 +182,35 @@ export default async function SchemesPage({
         </div>
       ) : (
         <>
-          <p className="mt-5 text-sm text-muted-foreground">{text.showing(results.length, q)}</p>
+          <p className="mt-5 text-sm text-muted-foreground" aria-live="polite">
+            {lang === "hi"
+              ? `${results.length} में से ${firstResult}–${lastResult} योजनाएँ${q ? ` “${q}” के लिए` : ""}`
+              : `Showing ${firstResult}–${lastResult} of ${results.length} schemes${q ? ` for “${q}”` : ""}`}
+          </p>
           <ul className="mt-3 grid gap-4 md:grid-cols-2">
-            {results.map((scheme) => (
+            {pageResults.map((scheme) => (
               <li key={scheme.slug}>
                 <SchemeCard scheme={scheme} lang={lang} />
               </li>
             ))}
           </ul>
+          {pageCount > 1 ? (
+            <nav aria-label={lang === "hi" ? "सूची पृष्ठ" : "Scheme pages"} className="mt-6 flex items-center justify-between gap-4">
+              {currentPage > 1 ? (
+                <Link href={hrefFor(q, activeCategory, place, lang, currentPage - 1)} rel="prev" className="inline-flex min-h-11 items-center rounded-xl border border-input px-4 text-sm font-medium">
+                  {lang === "hi" ? "पिछला" : "Previous"}
+                </Link>
+              ) : <span />}
+              <span className="text-sm text-muted-foreground" aria-current="page">
+                {lang === "hi" ? `पृष्ठ ${currentPage} / ${pageCount}` : `Page ${currentPage} of ${pageCount}`}
+              </span>
+              {currentPage < pageCount ? (
+                <Link href={hrefFor(q, activeCategory, place, lang, currentPage + 1)} rel="next" className="inline-flex min-h-11 items-center rounded-xl border border-input px-4 text-sm font-medium">
+                  {lang === "hi" ? "अगला" : "Next"}
+                </Link>
+              ) : <span />}
+            </nav>
+          ) : null}
         </>
       )}
     </div>
