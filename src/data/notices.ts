@@ -4,6 +4,47 @@ import type { FarmerNotice } from "@/lib/types"
 // Expired notices stay here for the archive; never delete their evidence.
 export const farmerNotices: FarmerNotice[] = [
   {
+    "id": "central-rabi-msp-2027-28",
+    "title": {
+      "en": "Rabi MSP announced for 2027–28",
+      "hi": "रबी 2027–28 का एमएसपी घोषित"
+    },
+    "body": {
+      "en": "Cabinet-approved rates per quintal: wheat ₹2,610; barley ₹2,286; gram ₹5,958; lentil ₹7,390; rapeseed/mustard ₹6,613; safflower ₹7,215. These apply to marketing season 2027–28.",
+      "hi": "मंत्रिमंडल द्वारा स्वीकृत दरें, प्रति क्विंटल: गेहूँ ₹2,610; जौ ₹2,286; चना ₹5,958; मसूर ₹7,390; रेपसीड/सरसों ₹6,613; कुसुम ₹7,215। ये विपणन सत्र 2027–28 की दरें हैं।"
+    },
+    "action": {
+      "en": "Check state procurement notices for registration and sale dates; this announcement does not open an application window.",
+      "hi": "पंजीकरण और बिक्री की तारीख राज्य की खरीद सूचना में देखें; इस घोषणा से आवेदन अवधि नहीं खुलती।"
+    },
+    "audience": {
+      "en": "Growers of these six Rabi crops across India.",
+      "hi": "भारत में इन छह रबी फसलों के किसान।"
+    },
+    "publishedOn": "2026-09-30",
+    "previewUntil": "2026-11-30",
+    "schemeSlugs": [
+      "pm-aasha"
+    ],
+    "evidence": [
+      {
+        "url": "https://www.pib.gov.in/PressReleasepage.aspx?PRID=2316941&lang=1&reg=48",
+        "title": {
+          "en": "Rabi MSP announced for 2027–28",
+          "hi": "रबी 2027–28 का एमएसपी घोषित"
+        },
+        "publishedOn": "2026-09-30",
+        "retrievedOn": "2026-10-04",
+        "excerpt": "Minimum Support Prices for all Rabi crops for Marketing Season 2027-28"
+      }
+    ],
+    "approval": {
+      "proposalId": "FP-68382b2146",
+      "version": 2
+    }
+  },
+
+  {
     "id": "haryana-kharif-procurement-2026",
     "title": {
       "en": "Haryana: Kharif procurement calendar",
